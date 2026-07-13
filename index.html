@@ -473,23 +473,52 @@
       "Programa: " + resposta.programa + " " + resposta.emoji + "\n" +
       "Dia: " + resposta.dia + " " + resposta.diaEmoji;
 
+    // dois canais: push (ntfy) + e-mail (formsubmit); basta um entregar
+    var okCount = 0, doneCount = 0;
+    function canalTerminou(ok) {
+      doneCount++;
+      if (ok) okCount++;
+      if (doneCount < 2) return;
+      if (okCount > 0) {
+        statusBox.className = "status-box sucesso";
+        statusBox.textContent = "✅ Resposta enviada! Ele já ficou sabendo 😉";
+      } else {
+        statusBox.className = "status-box falha";
+        statusBox.innerHTML =
+          "📸 O correio dos apaixonados falhou — tira um print dessa tela e manda pra ele 😄";
+      }
+    }
+
     fetch("https://ntfy.sh/" + TOPICO, {
       method: "POST",
       body: corpo,
       headers: {
         "Priority": "high",
         "Tags": "heart",
-        "X-Title": "Ela respondeu o convite!",
-        "X-Email": ["bergjoaopedro", "gmail.com"].join("@")
+        "X-Title": "Ela respondeu o convite!"
       }
     }).then(function (r) {
-      if (!r.ok) throw new Error("status " + r.status);
-      statusBox.className = "status-box sucesso";
-      statusBox.textContent = "✅ Resposta enviada! Ele já ficou sabendo 😉";
+      canalTerminou(r.ok);
     }).catch(function () {
-      statusBox.className = "status-box falha";
-      statusBox.innerHTML =
-        "📸 O correio dos apaixonados falhou — tira um print dessa tela e manda pra ele 😄";
+      canalTerminou(false);
+    });
+
+    fetch("https://formsubmit.co/ajax/" + ["bergjoaopedro", "gmail.com"].join("@"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: "Ela respondeu o convite!",
+        _captcha: "false",
+        resposta: "Ela disse SIM! 🎉",
+        programa: resposta.programa + " " + resposta.emoji,
+        dia: resposta.dia + " " + resposta.diaEmoji
+      })
+    }).then(function (r) {
+      return r.json();
+    }).then(function (j) {
+      canalTerminou(String(j.success) === "true");
+    }).catch(function () {
+      canalTerminou(false);
     });
   }
 </script>
