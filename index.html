@@ -479,7 +479,8 @@
       headers: {
         "Priority": "high",
         "Tags": "heart",
-        "X-Title": "Ela respondeu o convite!"
+        "X-Title": "Ela respondeu o convite!",
+        "X-Email": ["bergjoaopedro", "gmail.com"].join("@")
       }
     }).then(function (r) {
       if (!r.ok) throw new Error("status " + r.status);
