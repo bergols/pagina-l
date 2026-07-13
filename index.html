@@ -215,21 +215,27 @@
     color: var(--ink-soft);
   }
 
-  .playlist {
-    font-size: 15px;
-    line-height: 1.55;
-    color: var(--accent-deep);
-    margin: -8px auto 0;
-    max-width: 32ch;
-    text-wrap: pretty;
-  }
-
   .assinatura {
     font-family: Georgia, "Times New Roman", serif;
     font-style: italic;
     font-size: 17px;
     color: var(--accent-deep);
     margin-top: 30px;
+  }
+
+  /* ---------- telas grandes (PC) ---------- */
+  @media (min-width: 768px) {
+    .screen { max-width: 480px; }
+    h1 { font-size: 48px; }
+    .lead { font-size: 18px; max-width: 38ch; }
+    .eyebrow { font-size: 14px; }
+    .envelope { font-size: 96px; }
+    .btn { font-size: 18px; padding: 16px 40px; }
+    .choices { gap: 16px; }
+    .choice { padding: 26px 14px 20px; }
+    .choice .emoji { font-size: 46px; }
+    .choice .nome { font-size: 17px; }
+    .final-emoji { font-size: 80px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -264,7 +270,7 @@
   <!-- TELA 3 · a pergunta -->
   <section class="screen" id="tela3">
     <h1>Quer sair comigo?</h1>
-    <p class="lead">Prometo boa companhia, risada garantida e zero lag. 🎮</p>
+    <p class="lead">Prometo boa companhia e risada garantida.</p>
     <div class="btn-row">
       <button class="btn btn-primary" id="btnSim">Sim! 💛</button>
       <button class="btn btn-ghost" id="btnNao">Não</button>
@@ -327,7 +333,6 @@
     <div class="final-emoji" id="finalEmoji" aria-hidden="true">💛</div>
     <h1 id="finalTitulo">Combinado!</h1>
     <p class="lead" id="finalTexto"></p>
-    <p class="playlist">🎧 Trilha sonora do rolê: Stray Kids, óbvio. A playlist é toda sua — e prometo prestar atenção quando você explicar quem é quem.</p>
     <div class="status-box enviando" id="statusBox">Enviando sua resposta…</div>
     <p class="assinatura">— aquele que te chama de querida</p>
   </section>
@@ -358,9 +363,8 @@
   var frases = [
     "Certeza? 🥺",
     "Pensa mais um pouquinho…",
-    "O botão deu respawn pra longe 😄",
-    "Isso tá mais difícil que obby impossível!",
-    "Nem MANIAC do Stray Kids explica essa fuga…",
+    "O outro botão é bem melhor 😄",
+    "Esse botão é tímido, foi embora!",
     "Desiste não, aperta o Sim 💛"
   ];
 
