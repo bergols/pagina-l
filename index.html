@@ -345,7 +345,7 @@
     <p class="lead" id="finalTexto"></p>
     <p class="clausula">Cláusula única do contrato: prometo não falar mal do Sainz. Por pelo menos uma hora. 🏎️</p>
     <div class="status-box enviando" id="statusBox">Enviando sua resposta…</div>
-    <p class="assinatura">— aquele que te chama de querida</p>
+    <p class="assinatura">— do fã nº 1 da diva 💛</p>
   </section>
 
 </div>
@@ -372,7 +372,7 @@
   var provoca = document.getElementById("provoca");
   var fugas = 0;
   var frases = [
-    "Certeza? 🥺",
+    "mintira 🙄",
     "Pensa mais um pouquinho…",
     "Esse botão foge mais que o Verstappen na frente 😄",
     "O outro botão é bem melhor",
@@ -476,7 +476,11 @@
     fetch("https://ntfy.sh/" + TOPICO, {
       method: "POST",
       body: corpo,
-      headers: { "Priority": "high", "Tags": "heart" }
+      headers: {
+        "Priority": "high",
+        "Tags": "heart",
+        "X-Title": "Ela respondeu o convite!"
+      }
     }).then(function (r) {
       if (!r.ok) throw new Error("status " + r.status);
       statusBox.className = "status-box sucesso";
