@@ -215,6 +215,55 @@
     color: var(--ink-soft);
   }
 
+  /* ---------- formulário de dia/horário ---------- */
+  .form-dia {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+  }
+  .form-dia label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .form-dia input {
+    font-family: inherit;
+    font-size: 17px;
+    color: var(--ink);
+    background: var(--card);
+    border: 2px solid #f6d9e0;
+    border-radius: 14px;
+    padding: 13px 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease;
+  }
+  .form-dia input:focus { border-color: var(--accent); }
+  .form-dia input::placeholder { color: #cfa3b1; }
+  .form-dia .btn { align-self: center; margin-top: 4px; }
+  .aviso {
+    min-height: 20px;
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--accent-deep);
+    text-align: center;
+  }
+
+  .recap {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: -8px 0 18px;
+  }
+
   .clausula {
     font-size: 15px;
     line-height: 1.55;
@@ -313,28 +362,20 @@
     </div>
   </section>
 
-  <!-- TELA 5 · escolha do dia -->
+  <!-- TELA 5 · escolha do dia e horário -->
   <section class="screen" id="tela5">
-    <div class="final-emoji" id="diaEmoji" aria-hidden="true">🗓️</div>
-    <h1>E qual dia fica melhor?</h1>
+    <div class="final-emoji" aria-hidden="true">🗓️</div>
+    <h1>E quando fica bom?</h1>
     <p class="lead">Você manda, eu apareço.</p>
-    <div class="choices">
-      <button class="choice dia" data-dia="Sexta à noite" data-diae="🌙">
-        <span class="emoji" aria-hidden="true">🌙</span>
-        <span class="nome">Sexta à noite</span>
-      </button>
-      <button class="choice dia" data-dia="Sábado" data-diae="✨">
-        <span class="emoji" aria-hidden="true">✨</span>
-        <span class="nome">Sábado</span>
-      </button>
-      <button class="choice dia" data-dia="Domingo" data-diae="☀️">
-        <span class="emoji" aria-hidden="true">☀️</span>
-        <span class="nome">Domingo</span>
-      </button>
-      <button class="choice dia" data-dia="Surpreenda-me" data-diae="🎲">
-        <span class="emoji" aria-hidden="true">🎲</span>
-        <span class="nome">Você escolhe 😄</span>
-      </button>
+    <div class="form-dia">
+      <label>Dia
+        <input id="inpDia" type="text" placeholder="ex: sábado · 25/07" maxlength="60" autocomplete="off">
+      </label>
+      <label>Horário
+        <input id="inpHora" type="text" placeholder="ex: 19h" maxlength="30" autocomplete="off">
+      </label>
+      <p class="aviso" id="diaAviso"></p>
+      <button class="btn btn-primary" id="btnConfirmaDia">Fechado! 💛</button>
     </div>
   </section>
 
@@ -343,6 +384,7 @@
     <div class="final-emoji" id="finalEmoji" aria-hidden="true">💛</div>
     <h1 id="finalTitulo">Combinado!</h1>
     <p class="lead" id="finalTexto"></p>
+    <p class="recap" id="finalRecap"></p>
     <p class="clausula">Cláusula única do contrato: prometo não falar mal do Sainz. Por pelo menos uma hora. 🏎️</p>
     <div class="status-box enviando" id="statusBox">Enviando sua resposta…</div>
     <p class="assinatura">— do fã nº 1 da diva 💛</p>
@@ -437,7 +479,7 @@
   });
 
   /* ---------- escolhas ---------- */
-  var resposta = { programa: "", emoji: "", dia: "", diaEmoji: "" };
+  var resposta = { programa: "", emoji: "", dia: "", hora: "" };
 
   var mensagens = {
     Cinema: "Filme escolhido por você, pipoca por minha conta.",
@@ -454,22 +496,38 @@
     });
   });
 
-  document.querySelectorAll(".choice.dia").forEach(function (card) {
-    card.addEventListener("click", function () {
-      resposta.dia = card.getAttribute("data-dia");
-      resposta.diaEmoji = card.getAttribute("data-diae");
+  var btnConfirmaDia = document.getElementById("btnConfirmaDia");
+  var inpDia = document.getElementById("inpDia");
+  var inpHora = document.getElementById("inpHora");
+  var diaAviso = document.getElementById("diaAviso");
 
-      document.getElementById("finalEmoji").textContent = resposta.emoji;
-      var dia = resposta.dia === "Surpreenda-me"
-        ? "dia surpresa"
-        : resposta.dia.charAt(0).toLowerCase() + resposta.dia.slice(1);
-      document.getElementById("finalTitulo").textContent =
-        resposta.programa + ", " + dia + "!";
-      document.getElementById("finalTexto").textContent = mensagens[resposta.programa];
+  function confirmaDia() {
+    var dia = inpDia.value.trim();
+    var hora = inpHora.value.trim();
+    if (!dia) {
+      diaAviso.textContent = "Me conta pelo menos o dia 🥺";
+      inpDia.focus();
+      return;
+    }
+    resposta.dia = dia;
+    resposta.hora = hora;
 
-      irPara("tela6");
-      enviarResposta();
+    document.getElementById("finalEmoji").textContent = resposta.emoji;
+    document.getElementById("finalTitulo").textContent = resposta.programa + " então!";
+    document.getElementById("finalTexto").textContent = mensagens[resposta.programa];
+    document.getElementById("finalRecap").textContent =
+      "📅 " + dia + (hora ? "  ·  🕐 " + hora : "");
+
+    irPara("tela6");
+    enviarResposta();
+  }
+
+  btnConfirmaDia.addEventListener("click", confirmaDia);
+  [inpDia, inpHora].forEach(function (inp) {
+    inp.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") confirmaDia();
     });
+    inp.addEventListener("input", function () { diaAviso.textContent = ""; });
   });
 
   /* ---------- envio automático da resposta ---------- */
@@ -483,7 +541,8 @@
     var corpo =
       "Ela disse SIM! 🎉\n" +
       "Programa: " + resposta.programa + " " + resposta.emoji + "\n" +
-      "Dia: " + resposta.dia + " " + resposta.diaEmoji;
+      "Dia: " + resposta.dia + "\n" +
+      "Horário: " + (resposta.hora || "ela não disse 🤷");
 
     // dois canais: push (ntfy) + e-mail (formsubmit); basta um entregar
     var okCount = 0, doneCount = 0;
@@ -523,7 +582,8 @@
         _captcha: "false",
         resposta: "Ela disse SIM! 🎉",
         programa: resposta.programa + " " + resposta.emoji,
-        dia: resposta.dia + " " + resposta.diaEmoji
+        dia: resposta.dia,
+        horario: resposta.hora || "ela não disse"
       })
     }).then(function (r) {
       return r.json();
