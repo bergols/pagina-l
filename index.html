@@ -3,15 +3,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <style>
   :root {
-    --bg-top: #fff1ec;
-    --bg-bottom: #ffe0e9;
-    --ink: #5c2a3a;
-    --ink-soft: #8a5568;
-    --accent: #e85d75;
-    --accent-deep: #c94368;
+    --bg-top: #f6f1ff;
+    --bg-bottom: #e7d9fb;
+    --ink: #3b2860;
+    --ink-soft: #6d578f;
+    --accent: #8b5cf6;
+    --accent-deep: #6d3fd4;
     --honey: #ffc64d;
-    --card: #fffdfb;
-    --shadow: 0 12px 32px rgba(201, 67, 104, 0.18);
+    --card: #fdfcff;
+    --shadow: 0 12px 32px rgba(109, 63, 212, 0.20);
   }
 
   html, body {
@@ -123,7 +123,7 @@
   .btn-ghost {
     background: var(--card);
     color: var(--ink-soft);
-    border: 2px solid #f3cfd8;
+    border: 2px solid #ddccf5;
   }
 
   .btn-row {
@@ -162,7 +162,7 @@
   .choice {
     font-family: inherit;
     background: var(--card);
-    border: 2px solid #f6d9e0;
+    border: 2px solid #e4d7f8;
     border-radius: 22px;
     padding: 22px 12px 18px;
     cursor: pointer;
@@ -200,7 +200,7 @@
   }
   .status-box.enviando {
     background: var(--card);
-    border: 2px solid #f6d9e0;
+    border: 2px solid #e4d7f8;
     color: var(--ink-soft);
   }
   .status-box.sucesso {
@@ -237,7 +237,7 @@
     font-size: 17px;
     color: var(--ink);
     background: var(--card);
-    border: 2px solid #f6d9e0;
+    border: 2px solid #e4d7f8;
     border-radius: 14px;
     padding: 13px 14px;
     outline: none;
@@ -246,7 +246,7 @@
     transition: border-color 0.15s ease;
   }
   .form-dia input:focus { border-color: var(--accent); }
-  .form-dia input::placeholder { color: #cfa3b1; }
+  .form-dia input::placeholder { color: #b5a3d6; }
   .form-dia .btn { align-self: center; margin-top: 4px; }
   .aviso {
     min-height: 20px;
@@ -331,7 +331,7 @@
     <h1>Quer sair comigo?</h1>
     <p class="lead">Escolhe com calma. Sem pressa.</p>
     <div class="btn-row">
-      <button class="btn btn-primary" id="btnSim">Sim! 💛</button>
+      <button class="btn btn-primary" id="btnSim">Sim! 💜</button>
       <button class="btn btn-ghost" id="btnNao">Não</button>
     </div>
     <p class="provoca" id="provoca"></p>
@@ -375,19 +375,19 @@
         <input id="inpHora" type="text" placeholder="ex: 19h" maxlength="30" autocomplete="off">
       </label>
       <p class="aviso" id="diaAviso"></p>
-      <button class="btn btn-primary" id="btnConfirmaDia">Fechado 💛</button>
+      <button class="btn btn-primary" id="btnConfirmaDia">Fechado 💜</button>
     </div>
   </section>
 
   <!-- TELA 6 · final -->
   <section class="screen" id="tela6">
-    <div class="final-emoji" id="finalEmoji" aria-hidden="true">💛</div>
+    <div class="final-emoji" id="finalEmoji" aria-hidden="true">💜</div>
     <h1 id="finalTitulo">Combinado!</h1>
     <p class="lead" id="finalTexto"></p>
     <p class="recap" id="finalRecap"></p>
     <p class="clausula">Cláusula única do contrato: prometo não falar mal do Sainz. Por pelo menos uma hora. 🏎️</p>
     <div class="status-box enviando" id="statusBox">Enviando sua resposta…</div>
-    <p class="assinatura">— do fã nº 1 da diva 💛</p>
+    <p class="assinatura">— do fã nº 1 da diva 💜</p>
   </section>
 
 </div>
@@ -418,7 +418,7 @@
     "Pensa mais um pouquinho…",
     "Esse botão foge mais que o Verstappen na frente 😄",
     "O outro botão é bem melhor",
-    "Desiste não, aperta o Sim 💛"
+    "Desiste não, aperta o Sim 💜"
   ];
 
   var ultimaFuga = 0;
